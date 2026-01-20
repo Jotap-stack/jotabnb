@@ -1,14 +1,18 @@
 import React from "react";
 import logo from "../assets/logo.png";
+import {Link} from "react-router-dom"
 
 const Header = () => {
   return (
     <header className="h-30 shadow-md">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
-        <div className="flex h-30 w-50 items-center">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-3 py-3 sm:px-6">
+        <Link to="/" className="flex h-30 w-50 items-center">
           <img className="h-30" src={logo} alt="JotaBnB" />
-        </div>
-        <div className="flex h-15 items-center rounded-full border border-gray-300 py-2 pr-4 pl-6 shadow-md">
+        </Link>
+        <Link
+          to="/"
+          className="hidden h-15 items-center rounded-full border border-gray-300 py-2 pr-4 pl-6 shadow-md lg:flex"
+        >
           <p className="border-r border-r-gray-300 pr-4">Qualquer Lugar</p>
           <p className="border-r border-r-gray-300 px-4">Qualquer Semana</p>
           <p className="px-4">Hóspedes</p>
@@ -28,8 +32,8 @@ const Header = () => {
               />
             </svg>
           </div>
-        </div>
-        <div className="flex h-15 items-center gap-2 rounded-full border border-gray-300 py-2 pr-4 pl-6 shadow-md">
+        </Link>
+        <Link to="/login" className="flex h-15 items-center gap-2 rounded-full border border-gray-300 py-2 pr-4 pl-6 shadow-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -59,8 +63,8 @@ const Header = () => {
             />
           </svg>
 
-          <p>Nome</p>
-        </div>
+          <p className="max-w-20 truncate sm:max-w-38">Diego Souza</p>
+        </Link>
       </div>
     </header>
   );
