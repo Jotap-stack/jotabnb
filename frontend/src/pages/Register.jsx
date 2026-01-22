@@ -12,8 +12,28 @@ const Register = ({ setUser }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (email && password && name) {
+      try {
+        const { data: userDoc } = await axios.post("/users", {
+          name,
+          email,
+          password,
+        });
+
+        setUser(userDoc);
+        setRedirect(true);
+      } catch (error) {
+        console.error("Erro no registro:", error);
+        alert(error.response?.data || "Erro ao se registrar");
+      }
+    } else {
+      alert("Você precisa preencher todos os campos");
+    }
    
   };
+
+
+
 
   if (redirect) return <Navigate to="/" />;
 
