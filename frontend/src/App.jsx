@@ -4,38 +4,42 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Register from "./pages/Register";
-import { useEffect } from "react";
+import Account from "./pages/Account";
+import { userContext } from "./contexts/UserContext";
 
 axios.defaults.baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
 axios.defaults.withCredentials = true;
 
 const App = () => {
-  const [user, setUser] = React.useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const axiosGet = async () => {
-      const { data } = await axios.get("/users/profile");
-
-      setUser(data);
+    const fetchUser = async () => {
+      try {
+        const { data } = await axios.get("/users/profile");
+        setUser(data);
+      } catch (error) {
+        console.log("Usuário não logado");
+      }
     };
-    axiosGet();
+    fetchUser();
   }, []);
 
   return (
     <>
-      <BrowserRouter>
-        <Header user={user} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/login"
-            element={<Login user={user} setUser={setUser} />}
-          />
-          <Route path="/register" element={<Register setUser={setUser} />} />
-        </Routes>
-      </BrowserRouter>
+      <userContext.Provider value={{ user, setUser }}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/account/:subpage?" element={<Account />} />
+          </Routes>
+        </BrowserRouter>
+      </userContext.Provider>
     </>
   );
 };

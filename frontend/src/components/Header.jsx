@@ -1,8 +1,10 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../contexts/UserContext";
 
-const Header = ({ user }) => {
+const Header = () => {
+  const { user } = useUserContext();
   console.log(user);
   return (
     <header className="h-30 shadow-md">
@@ -35,7 +37,7 @@ const Header = ({ user }) => {
           </div>
         </Link>
         <Link
-          to={user ? "/account" : "/login"}
+          to={user ? "/account/profile" : "/login"}
           className="flex h-15 items-center gap-2 rounded-full border border-gray-300 py-2 pr-4 pl-6 shadow-md"
         >
           <svg
